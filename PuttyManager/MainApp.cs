@@ -167,7 +167,7 @@ namespace PuttyManager
                 if (result == DialogResult.OK)
                 {
                     string pss = string.Empty;
-                    if (!string.IsNullOrEmpty(form.Pass))
+                    if (string.IsNullOrEmpty(form.Pass))
                         pss = listserver[dataStr.CurrentCell.RowIndex].Password;
                     else
                         pss = form.Pass;

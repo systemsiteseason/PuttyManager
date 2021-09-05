@@ -60,15 +60,18 @@ namespace PuttyManager
 
         private void btn_Transfer_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(tb_Patch.Text) && !string.IsNullOrEmpty(rtb_Dir.Text) && !string.IsNullOrEmpty(tb_Port.Text))
+            if(!string.IsNullOrEmpty(tb_Patch.Text) && !string.IsNullOrEmpty(tb_Port.Text))
             {
                 this.btn_Transfer.Enabled = false;
+                rtb_Dir.Enabled = false;
+                cb_Folder.Enabled = false;
                 var lines = this.rtb_Dir.Text.Split('\n').ToList();
-                foreach(var line in lines)
+                string fd = cb_Folder.Checked == true ? "-r" : "";
+                foreach (var line in lines)
                 {
                     Process runTerminal = new Process();
                     runTerminal.StartInfo.FileName = PSCP;
-                    runTerminal.StartInfo.Arguments = string.Concat($"-P {tb_Port.Text} -pw {Pass} -r {tb_Patch.Text} {User}@{IP}:\"{line}\"");
+                    runTerminal.StartInfo.Arguments = string.Concat($"-P {tb_Port.Text} -pw {Pass} {fd} {tb_Patch.Text} {User}@{IP}:\"{line}\"");
                     runTerminal.Start();
                 }
 
